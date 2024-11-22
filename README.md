@@ -1,2 +1,15 @@
-# uil-cs-training-platform
-made a react.js app for practicing uil computer science java problems with a terminal-code editor split
+# React + Vite
+
+An in-browser code editor that allows you to write and execute your code in the browser.
+
+## Run Locally
+
+```bash
+# install dependencies
+
+npm install
+
+# start the dev server
+
+npm run dev
+```

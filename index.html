@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/rhhs_logo.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RHHS UIL CS Online Practice Editor</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      height: 170vh;
+      justify-content: space-between;
+    }
+
+    #root {
+      flex-grow: 1;
+      text-align: center;
+    }
+
+    p {
+      padding: 10px;
+      font-size: 18px;
+      text-align: center;
+      color: #fff;
+    }
+
+    .pdf-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      min-height: 150px;
+      background: #f4f4f4;
+      overflow: hidden;
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="pdf-container" id="pdfContainer">
+    <iframe src="/uilcs_district_2023_student_packet.pdf"></iframe>
+  </div>
+
+  <div id="root"></div>
+
+  <script type="module" src="/src/main.jsx"></script>
+</body>
+
+</html>
