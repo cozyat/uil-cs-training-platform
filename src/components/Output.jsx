@@ -30,9 +30,8 @@ const Output = ({ editorRef, language }) => {
   };
 
   return (
-    <Box w="50%">
+    <Box>
       <Text mb={2} fontSize="lg">
-        Output
       </Text>
       <Button
         variant="outline"
@@ -44,12 +43,13 @@ const Output = ({ editorRef, language }) => {
         Run Code
       </Button>
       <Box
-        height="75vh"
+        height="35vh"
         p={2}
         color={isError ? "red.400" : ""}
         border="1px solid"
         borderRadius={4}
         borderColor={isError ? "red.500" : "#333"}
+        overflowY="auto"
       >
         {output
           ? output.map((line, i) => <Text key={i}>{line}</Text>)
@@ -58,4 +58,5 @@ const Output = ({ editorRef, language }) => {
     </Box>
   );
 };
+
 export default Output;

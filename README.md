@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # UIL Computer Science Training Website for RHHS
 
 An in-browser code editor that allows you to write and execute your code based off a PDF that you can select programming problems from to practice.
@@ -23,4 +24,20 @@ public class Solution {
     }
 }
 
+=======
+# React + Vite
+
+An in-browser code editor that allows you to write and execute your code in the browser.
+
+## Run Locally
+
+```bash
+# install dependencies
+
+npm install
+
+# start the dev server
+
+npm run dev
+>>>>>>> 68d447d (Commit my local changes before pulling)
 ```
