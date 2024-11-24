@@ -1,28 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="/rhhs_logo.svg" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>RHHS UIL CS Online Practice Editor</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RHHS UIL CS Training</title>
+  <script>
+    if (!sessionStorage.getItem('loggedIn')) {
+      window.location.href = 'login.html';
+    }
+
+    function logout() {
+      sessionStorage.removeItem('loggedIn');
+      window.location.href = 'login.html';
+    }
+  </script>
   <style>
     body {
       margin: 0;
-      padding: 0;
+      padding: 20px;
       font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      box-sizing: border-box;
+    }
+
+    header {
       display: flex;
-      flex-direction: column;
-      height: 100%;
-      justify-content: flex-start;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .logout-btn {
+      padding: 10px 20px;
+      background-color: #d93d3d;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .logout-btn:hover {
+      background-color: #b32020;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 24px;
+      color: #333;
     }
 
     #root {
-      flex-grow: 1;
+      margin-top: 20px;
+      width: 100%;
     }
 
     .pdf-container {
+      position: relative;
       width: 100%;
-      height: 100%;
+      background: #f4f4f4;
       overflow: hidden;
     }
 
@@ -33,8 +70,14 @@
     }
   </style>
 </head>
+
 <body>
+  <header>
+    <h1 style="color:#f0f0f0">RHHS UIL CS Online Practice Editor</h1>
+    <button class="logout-btn" onclick="logout()">Logout</button>
+  </header>
   <div id="root"></div>
   <script type="module" src="/src/main.jsx"></script>
 </body>
-</html>
+
+</html>3

@@ -13,12 +13,18 @@
     "@chakra-ui/react": "^2.8.2",
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
+    "@fontsource/source-code-pro": "^5.1.0",
     "@monaco-editor/react": "^4.6.0",
     "axios": "^1.6.7",
     "framer-motion": "^11.0.3",
     "pdfjs-dist": "^4.8.69",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dnd": "^16.0.1",
+    "react-dnd-html5-backend": "^16.0.1",
+    "react-dom": "^18.2.0",
+    "react-draggable": "^4.4.6",
+    "react-resizable": "^3.0.5",
+    "react-resizeable": "^0.2.6"
   },
   "devDependencies": {
     "@types/react": "^18.2.43",

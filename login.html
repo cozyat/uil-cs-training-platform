@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RHHS UIL CS Training</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: rgb(20, 24, 33);
+        }
+
+        .login-container {
+            padding: 20px;
+            border: 1px solid rgb(13, 10, 19);
+            border-radius: 5px;
+            background-color: rgb(13, 10, 19);
+            box-shadow: 0px 4px 6px rgba(15, 15, 15);
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            text-align: center;
+            color: rgb(154, 177, 216);
+        }
+
+        form {
+            text-align: center;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #a2a2a2;
+            /* Border color */
+            border-radius: 4px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: #333;
+            /* Change the background color */
+            color: white;
+            /* Change text color */
+        }
+
+        input[type="text"]:focus,
+        input[type="password"]:focus {
+            border-color: rgb(255, 255, 255);
+            /* Change the border color when focused */
+            outline: none;
+            background-color: #444;
+            /* Change background color when focused */
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: rgb(32, 29, 38);
+            border: none;
+            color: white;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: rgb(51, 48, 56);
+            /* 51, 48, 56 -> 32, 29, 38 */
+        }
+
+        .error {
+            color: rgb(209, 11, 11);
+            font-size: 14px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-container">
+        <h1>RHHS UIL CS Training</h1>
+        <input type="text" id="username" placeholder="Username">
+        <input type="password" id="password" placeholder="Password">
+        <button id="loginButton">Login</button>
+        <div id="error" class="error"></div>
+    </div>
+
+    <script>
+        const LOGIN_CREDENTIALS = {
+            username: "groupStudent",
+            password: "securePassword123"
+        };
+
+        document.getElementById('loginButton').addEventListener('click', () => {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (username === LOGIN_CREDENTIALS.username && password === LOGIN_CREDENTIALS.password) {
+                sessionStorage.setItem('loggedIn', 'true');
+                window.location.href = 'index.html';
+            } else {
+                document.getElementById('error').textContent = "Invalid username or password.";
+            }
+        });
+    </script>
+</body>
+
+</html>

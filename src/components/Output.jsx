@@ -50,9 +50,14 @@ const Output = ({ editorRef, language }) => {
         borderRadius={4}
         borderColor={isError ? "red.500" : "#333"}
         overflowY="auto"
+        fontFamily="'Source Code Pro', monospace" // Add font here
       >
         {output
-          ? output.map((line, i) => <Text key={i}>{line}</Text>)
+          ? output.map((line, i) => (
+              <Text key={i} fontFamily="'Source Code Pro', monospace">
+                {line}
+              </Text>
+            ))
           : 'Click "Run Code" to see the output here'}
       </Box>
     </Box>
