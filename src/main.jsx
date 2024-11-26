@@ -14,11 +14,10 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   </React.StrictMode>
 );
 
-// Render Language and Problem Selectors in Header
 ReactDOM.createRoot(document.getElementById("language-selector")).render(
-  <LanguageSelector language="java" onSelect={() => {}} />
+  <LanguageSelector language="java" onSelect={() => { }} />
 );
 
 ReactDOM.createRoot(document.getElementById("problem-selector")).render(
-  <ProblemSelector problem="1. Bogdan" onSelect={() => {}} />
+  <ProblemSelector problem="1. Bogdan" onSelect={() => { }} />
 );

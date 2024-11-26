@@ -17,9 +17,13 @@ import java.util.regex.*;
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 
+/* The name of your class should correspond to the name of the Java file. */
+/* This name is specified for the problem in the PDF you are working with. */
+
 public class Solution {
-    public static void main(String[] args) {
-        /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution. */
-    }
+	public static void main(String[] args) {
+		/* Enter your code here. Read input from STDIN. Print output to STDOUT. */
+	}
 }
 ```
+

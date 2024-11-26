@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Box, Button, Text, useToast } from "@chakra-ui/react";
 import { executeCode } from "../api";
 
-const Output = ({ editorRef, language }) => {
+const Output = ({ editorRef, language, userInput }) => {
   const toast = useToast();
   const [output, setOutput] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -11,13 +11,14 @@ const Output = ({ editorRef, language }) => {
   const runCode = async () => {
     const sourceCode = editorRef.current.getValue();
     if (!sourceCode) return;
+
     try {
       setIsLoading(true);
-      const { run: result } = await executeCode(language, sourceCode);
+      const { run: result } = await executeCode(language, sourceCode, userInput);
       setOutput(result.output.split("\n"));
       result.stderr ? setIsError(true) : setIsError(false);
     } catch (error) {
-      console.log(error);
+      console.error(error);
       toast({
         title: "An error occurred.",
         description: error.message || "Unable to run code",
@@ -31,8 +32,6 @@ const Output = ({ editorRef, language }) => {
 
   return (
     <Box>
-      <Text mb={2} fontSize="lg">
-      </Text>
       <Button
         variant="outline"
         colorScheme="green"
@@ -50,14 +49,14 @@ const Output = ({ editorRef, language }) => {
         borderRadius={4}
         borderColor={isError ? "red.500" : "#333"}
         overflowY="auto"
-        fontFamily="'Source Code Pro', monospace" // Add font here
+        fontFamily="'Source Code Pro', monospace"
       >
         {output
           ? output.map((line, i) => (
-              <Text key={i} fontFamily="'Source Code Pro', monospace">
-                {line}
-              </Text>
-            ))
+            <Text key={i} fontFamily="'Source Code Pro', monospace">
+              {line}
+            </Text>
+          ))
           : 'Click "Run Code" to see the output here'}
       </Box>
     </Box>

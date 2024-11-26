@@ -1,12 +1,4 @@
-import {
-    Box,
-    Button,
-    Menu,
-    MenuButton,
-    MenuItem,
-    MenuList,
-    Text,
-} from "@chakra-ui/react";
+import { Box, Button, Menu, MenuButton, MenuItem, MenuList, Text } from "@chakra-ui/react";
 
 const problems = [
     "1. Bogdan",

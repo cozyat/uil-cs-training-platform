@@ -25,14 +25,32 @@
         }
 
         h1 {
-            margin-bottom: 20px;
+            margin-bottom: 10px;
             font-size: 24px;
             text-align: center;
             color: rgb(154, 177, 216);
         }
 
-        form {
-            text-align: center;
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .logo.rhhs,
+        .logo.uil {
+            filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(180deg) brightness(40%) contrast(120%);
+        }
+
+        .logo.rhhs {
+            width: 60px;
+            height: auto;
+        }
+
+        .logo.uil {
+            width: 80px;
         }
 
         input[type="text"],
@@ -41,24 +59,19 @@
             padding: 10px;
             margin: 10px 0;
             border: 1px solid #a2a2a2;
-            /* Border color */
             border-radius: 4px;
             display: block;
             margin-left: auto;
             margin-right: auto;
             background-color: #333;
-            /* Change the background color */
             color: white;
-            /* Change text color */
         }
 
         input[type="text"]:focus,
         input[type="password"]:focus {
             border-color: rgb(255, 255, 255);
-            /* Change the border color when focused */
             outline: none;
             background-color: #444;
-            /* Change background color when focused */
         }
 
         button {
@@ -74,7 +87,6 @@
 
         button:hover {
             background-color: rgb(51, 48, 56);
-            /* 51, 48, 56 -> 32, 29, 38 */
         }
 
         .error {
@@ -88,6 +100,10 @@
 <body>
     <div class="login-container">
         <h1>RHHS UIL CS Training</h1>
+        <div class="logo-container">
+            <img src="public/rhhs-logo.png" alt="RHHS Logo" class="logo rhhs">
+            <img src="public/uil-large.png" alt="UIL Logo" class="logo uil">
+        </div>
         <input type="text" id="username" placeholder="Username">
         <input type="password" id="password" placeholder="Password">
         <button id="loginButton">Login</button>
