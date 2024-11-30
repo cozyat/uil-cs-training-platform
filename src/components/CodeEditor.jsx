@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from "react";
-import { Box, HStack } from "@chakra-ui/react";
+import { Box, HStack, Button } from "@chakra-ui/react";
 import { Editor } from "@monaco-editor/react";
 import LanguageSelector from "./LanguageSelector";
 import ProblemSelector from "./ProblemSelector";
@@ -22,13 +22,30 @@ const problemInputs = {
   "12. Vanessa": "5\n1,2,3\n4\n--------------------\n1,2,3,5\n5\n--------------------\n2,5,3,6\n10\n--------------------\n1,2,3,4,5,10\n12\n--------------------\n2,4,6,8\n7\n--------------------"
 };
 
+// Judging outputs for each problem
+const problemOutputs = {
+  "1. Bogdan": "-------------------------------------------------------------\n1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 3 3\n1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1\n-------------------------------------------------------------\nS M T W T F S S M T W T F S S M T W T F S S M T W T F S S M T\nU O U E H R A U O U E H R A U O U E H R A U O U E H R A U O U\nN N E D U I T N N E D U I T N N E D U I T N N E D U I T N N E\n-------------------------------------------------------------\nN N A B A B N N A B A B A N N N B A B A N N B A B A B N N A B\no o o o o o o o o o o i\nD D D D D D D D D D D D D D D D D D D r\nC C a a a a C C a a a a a C C C a a a a C C a a a a a C C a t\nl l y y y y l l y y y y y l l l y y y y l l y y y y y l l y h\na a a a a a a a a a a d\ns s s s s s s s s s s a\ns s s s s s s s s s s y\n-------------------------------------------------------------",
+  "2. Christine": "7 6 5 4 3\n3\n3 4 5 6 7 8 9 10 11 12\n12 13 14 15 16 17 18 19 20\n20 19 18 17 16 15 14 13 12 11 10 9 8 7 6 5",
+  "3. George": "I've got a bad feeling about this.\nNever tell me the odds.\nI've got a bad feeling about this.\nNever tell me the odds.",
+  "4. Hisoka": "9000.00 78374.10 87374.10\n15000.00 18346.73 33346.73\n296294.40 429983.64 726278.04",
+  "5. Janice": "I WAS WONDERING IF AFTER ALL THESE YEARS YOUD LIKE TO MEET\nI AM YOUR FATHER\nTHE WORLD WAS GONNA ROLL ME\nGHIJKLMNOPQRSTUVWXYZ",
+  "6. Krishna": "10\n35\n364\n46\n1375",
+  "7. Liza": "HOMEWORK 1\nMonica Chan: 98\nAayush Targaryen: 96\nElsa Vu: 96\nMEAN SCORE: 80.55\nMEDIAN SCORE: 83.0\nEXAM - DIGITAL LOGIC\nSamantha Vu: 99\nTina Parker: 98\nDavid O'neal: 96\nMEAN SCORE: 80.87\nMEDIAN SCORE: 83.0\nMACHINE LEARNING PROJECT PRELIMINARY EVALUATION\nBobbi America: 100\nTina Davis: 90\nHunter Targaryen: 89\nMEAN SCORE: 78.06\nMEDIAN SCORE: 77.0",
+  "8. Miguel": "Dgo\nAaacceeeee fg Hiiii Llnnoorrssssttt Tuuvxy\nAbcde1234-5678Fghijklmnopqrst\nc-E-I-n=Q^z\nAcce-Ikoop-Prrrssss",
+  "9. Patrick": "31131211131221\n1117121411101318\n31131122211311123113321112131221123113111231121123222112\n5",
+  "10. Shreya": "Dine and Dash.\nBusiness as usual.\nBusiness as usual.",
+  "11. Sunil": "-35.00 56.00 24.00 -31.00 -7.00\n-4.40 7.20\n1.40\n=========================\n39.50 -29.33 -34.50\n10.33 2.33 -54.00 -3.67 15.67 -19.33\n-8.11\n=========================\n0.57 -15.00 -35.71 17.29 2.57 38.00 -30.00\n22.43 7.43 -12.86 44.43 -38.00 -9.57 -36.14\n-3.18\n=========================",
+  "12. Vanessa": "4\n6\n5\n49\n0"
+};
+
 const CodeEditor = () => {
   const editorRef = useRef();
   const [value, setValue] = useState("");
   const [language, setLanguage] = useState("java");
   const [selectedProblem, setSelectedProblem] = useState("1. Bogdan");
+  const [output, setOutput] = useState("");
 
-  const [editorWidth, setEditorWidth] = useState(50);  // Start with 50% width for the editor
+  const [editorWidth, setEditorWidth] = useState(50);
   const [dragging, setDragging] = useState(false);
 
   const onMount = (editor) => {
@@ -65,40 +82,78 @@ const CodeEditor = () => {
   };
 
   useEffect(() => {
-    const handleMouseMoveDebounced = (e) => {
-      if (!dragging) return;
-
-      requestAnimationFrame(() => {
-        const newWidth = (e.clientX / window.innerWidth) * 100;
-        if (newWidth >= 30 && newWidth <= 70) {
-          setEditorWidth(newWidth);
-        }
-      });
-    };
-
-    if (dragging) {
-      document.addEventListener("mousemove", handleMouseMoveDebounced);
-      document.addEventListener("mouseup", handleMouseUp);
+    const savedCode = localStorage.getItem(`code-${selectedProblem}`);
+    if (savedCode) {
+      setValue(savedCode);
     } else {
-      document.removeEventListener("mousemove", handleMouseMoveDebounced);
+      setValue(CODE_SNIPPETS[language]);
     }
+  }, [selectedProblem]);
 
-    return () => {
-      document.removeEventListener("mousemove", handleMouseMoveDebounced);
-      document.removeEventListener("mouseup", handleMouseUp);
-    };
-  }, [dragging]);
+  useEffect(() => {
+    if (value) {
+      localStorage.setItem(`code-${selectedProblem}`, value);
+    }
+  }, [value, selectedProblem]);
+
+  const handleRunCode = () => {
+    if (language === "java") {
+      setOutput("Code executed successfully!\nOutput:\n" + value);
+    } else if (language === "python") {
+      setOutput("Python code executed successfully!\nOutput:\n" + value);
+    } else {
+      setOutput("Unsupported language or execution error.");
+    }
+  };
+
+  const handleLogOut = () => {
+    localStorage.clear();
+    setValue("");
+    logout();
+    window.location.href = "login.html";
+  };
+
+  if (!sessionStorage.getItem('loggedIn')) {
+    window.location.href = 'login.html';
+  }
+
+  function logout() {
+    sessionStorage.removeItem('loggedIn');
+    window.location.href = 'login.html';
+  }
 
   return (
-    <Box>
-      <HStack spacing={4} mb={6}>
-        <LanguageSelector language={language} onSelect={onSelectLanguage} />
-        <ProblemSelector problem={selectedProblem} onSelect={onSelectProblem} />
-      </HStack>
+    <Box position="relative">
+      {/* Language and Problem Selectors Positioned on the Left */}
+      <Box
+        position="relative"
+        top="-25px"  // Moved up by adjusting the top value
+        left="0"
+        zIndex={10}
+        p={4}
+      >
+        <HStack spacing={8}>
+          <LanguageSelector language={language} onSelect={onSelectLanguage} />
+          <ProblemSelector problem={selectedProblem} onSelect={onSelectProblem} />
+        </HStack>
+      </Box>
+
+      {/* Dynamic positioning of the Log Out button */}
+      <Button
+        colorScheme="red"
+        onClick={handleLogOut}
+        position="absolute"
+        top="0px"  // Moved up by adjusting the top value
+        right="0"
+        zIndex={10}
+        mt={3}  // Optional, adjust for spacing
+      >
+        Log Out
+      </Button>
 
       <HStack spacing={2} height="97.5vh" width="100%" justifyContent="flex-start">
         <Box
-          width={{ base: "100%", md: `${editorWidth}%` }}  // Adjust for smaller screens
+          width={{ base: "100%", md: `${editorWidth}%` }}
           height="100%"
           position="relative"
           borderRight="0px solid #ccc"
@@ -110,16 +165,16 @@ const CodeEditor = () => {
                   enabled: false,
                 },
               }}
-              height="50%" // Adjust to fit editor
+              height="50%"
               theme="vs-dark"
               language={language}
               defaultValue={CODE_SNIPPETS[language]}
               onMount={onMount}
               value={value}
-              onChange={(value) => setValue(value)}
+              onChange={(newValue) => setValue(newValue)}
             />
             <Box
-              height="49.5%" // Terminal occupies the bottom part
+              height="49.5%"
               bg="gray.800"
               color="white"
               p={0.01}
@@ -132,30 +187,28 @@ const CodeEditor = () => {
         </Box>
 
         <Box
-          width={{ base: "100%", md: `${100 - editorWidth}%` }}  // Adjust for smaller screens
+          width={{ base: "100%", md: `${100 - editorWidth}%` }}
           height="100%"
           display="flex"
           flexDirection="column"
           justifyContent="space-between"
           p={0.001}
         >
-          <Box w="auto" height="170%" mb={3}>
+          <Box w="auto" height="100%" mb={3}>
             <iframe src="/uilcs_district_2023_student_packet.pdf" width="100%" height="100%" />
           </Box>
-
           <Box w="100%" height="30%" />
         </Box>
       </HStack>
 
       <Box
-
-      
         width="10px"
         cursor="col-resize"
         backgroundColor="#ccc"
         height="100%"
         onMouseDown={handleMouseDown}
       />
+
     </Box>
   );
 };
