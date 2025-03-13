@@ -4,7 +4,7 @@ An in-browser code editor that allows you to write and execute your code based o
 
 ```java
 
-// starter code for every prompt
+// Below is the starting code prompt for every code file presented in the UIL Events (Invitational A-B, Districts, Regional, State)
 
 import java.io.*;
 import java.math.*;
